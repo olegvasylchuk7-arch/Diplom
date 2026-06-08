@@ -71,14 +71,6 @@ export default function Login() {
                   : (lang === 'ua' ? 'Створити акаунт' : 'Create account')}
             </button>
           </form>
-
-          {mode === 'login' && (
-            <div className="muted mt-20" style={{ fontSize: 13, padding: 10, background: '#FFF8E1', borderRadius: 6 }}>
-              💡 {lang === 'ua'
-                ? <>Вхід через Supabase Auth. Адмін: <strong>admin@teplodim.ua</strong> з паролем, який ви задали в Supabase → Authentication → Users.</>
-                : <>Sign in via Supabase Auth. Admin: <strong>admin@teplodim.ua</strong> with the password you set in Supabase Authentication.</>}
-            </div>
-          )}
         </div>
 
         <div className="center mt-20">
