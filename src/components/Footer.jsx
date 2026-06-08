@@ -54,7 +54,7 @@ export default function Footer() {
 
         <div className="copyright">
           <div>© 2014–{new Date().getFullYear()} ТеплоДім. {lang === 'ua' ? 'Всі права захищено.' : 'All rights reserved.'}</div>
-          <div>{lang === 'ua' ? 'Дипломна робота • О. Терлецький' : 'Diploma project • O. Terletskyi'}</div>
+          <div>{lang === 'ua' ? 'Дипломна робота • О. Васельчук' : 'Diploma project • O. Terletskyi'}</div>
         </div>
       </div>
     </footer>
