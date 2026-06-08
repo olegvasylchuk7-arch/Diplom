@@ -1,0 +1,33 @@
+# Render Blueprint — автоматичне налаштування деплою.
+# При підключенні репозиторію Render прочитає цей файл і застосує конфіг.
+
+services:
+  - type: web
+    runtime: static
+    name: teplodim
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+
+    # SPA: усі шляхи (крім реальних файлів) віддавати index.html,
+    # щоб react-router-dom працював на /catalog, /product/1 тощо.
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
+    envVars:
+      - key: VITE_SUPABASE_URL
+        sync: false       # значення задасте в Render UI, у репо не комітимо
+      - key: VITE_SUPABASE_ANON_KEY
+        sync: false
+
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
