@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useApp } from '../contexts/AppContext';
+import { useApp, MAX_QTY } from '../contexts/AppContext';
 import { formatPrice, formatNumber } from '../utils/format';
 import { VOLUME_DISCOUNTS } from '../data/orders';
 import { generateQuotePDF } from '../utils/pdf';
@@ -88,7 +88,8 @@ export default function Cart() {
                   </div>
                   <div className="qty-control mt-10">
                     <button onClick={() => updateCartQty(it.productId, it.qty - 1)}>−</button>
-                    <input type="number" value={it.qty} onChange={(e) => updateCartQty(it.productId, Math.max(0, Number(e.target.value) || 0))} />
+                    <input type="number" min="0" max={MAX_QTY} value={it.qty}
+                      onChange={(e) => updateCartQty(it.productId, Math.min(MAX_QTY, Math.max(0, Number(e.target.value) || 0)))} />
                     <button onClick={() => updateCartQty(it.productId, it.qty + 1)}>+</button>
                   </div>
                   <button className="btn btn-ghost btn-sm mt-10" onClick={() => removeFromCart(it.productId)}>

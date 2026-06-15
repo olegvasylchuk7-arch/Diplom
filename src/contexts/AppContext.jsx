@@ -18,6 +18,9 @@ import { generateOrderId } from '../utils/format';
 const AppContext = createContext(null);
 export const useApp = () => useContext(AppContext);
 
+// Максимальна кількість одиниць одного товару в кошику.
+export const MAX_QTY = 99;
+
 export function AppProvider({ children }) {
   /* ----------------------------- мова ----------------------------- */
   const [lang, setLang] = useState(() => storage.get('lang', 'ua'));
@@ -78,16 +81,17 @@ export function AppProvider({ children }) {
       const idx = prev.findIndex((x) => x.productId === productId);
       if (idx >= 0) {
         const next = [...prev];
-        next[idx] = { ...next[idx], qty: next[idx].qty + qty };
+        next[idx] = { ...next[idx], qty: Math.min(MAX_QTY, next[idx].qty + qty) };
         return next;
       }
-      return [...prev, { productId, qty, ...extra }];
+      return [...prev, { productId, qty: Math.min(MAX_QTY, qty), ...extra }];
     });
     pushToast('Додано в кошик', 'success');
   }, []);
 
   const updateCartQty = (productId, qty) => {
-    setCart((prev) => prev.map((x) => x.productId === productId ? { ...x, qty } : x).filter((x) => x.qty > 0));
+    const clamped = Math.min(MAX_QTY, qty);
+    setCart((prev) => prev.map((x) => x.productId === productId ? { ...x, qty: clamped } : x).filter((x) => x.qty > 0));
   };
   const removeFromCart = (productId) => setCart((prev) => prev.filter((x) => x.productId !== productId));
   const clearCart = () => setCart([]);

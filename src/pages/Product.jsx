@@ -1,6 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { useState } from 'react';
-import { useApp } from '../contexts/AppContext';
+import { useApp, MAX_QTY } from '../contexts/AppContext';
 import RatingStars from '../components/RatingStars';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ProductCard from '../components/ProductCard';
@@ -86,8 +86,9 @@ export default function Product() {
               <div className="cart-item">
                 <div className="qty-control">
                   <button onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
-                  <input type="number" value={qty} onChange={(e) => setQty(Math.max(1, Number(e.target.value) || 1))} />
-                  <button onClick={() => setQty((q) => q + 1)}>+</button>
+                  <input type="number" min="1" max={MAX_QTY} value={qty}
+                    onChange={(e) => setQty(Math.min(MAX_QTY, Math.max(1, Number(e.target.value) || 1)))} />
+                  <button onClick={() => setQty((q) => Math.min(MAX_QTY, q + 1))}>+</button>
                 </div>
               </div>
               <button className="btn btn-primary btn-lg" onClick={() => addToCart(product.id, qty)}>
