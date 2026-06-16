@@ -19,7 +19,7 @@ const AppContext = createContext(null);
 export const useApp = () => useContext(AppContext);
 
 // Максимальна кількість одиниць одного товару в кошику.
-export const MAX_QTY = 99;
+export const MAX_QTY = 999;
 
 export function AppProvider({ children }) {
   /* ----------------------------- мова ----------------------------- */
